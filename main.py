@@ -32,15 +32,14 @@ task = client.tasks.create(agent_id=agent.id, **task_definition)
 
 class ResearchQuery(BaseModel):
     topic: str
-    output_format: str
+    format: str
 
 @app.post("/research")
 async def research(query: ResearchQuery):
-    print(query.topic, query.output_format)
     try:
         execution = client.executions.create(
             task_id=task.id,
-            input={"topic": query.topic, "output_format": query.output_format}
+            input={"topic": query.topic, "output_format": query.format}
         )
         while (result := client.executions.get(execution.id)).status not in ['succeeded', 'failed']:
             time.sleep(1)
