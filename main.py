@@ -23,33 +23,24 @@ client = Julep(api_key=os.getenv("JULEP_API_KEY"))
 agent = client.agents.create(
     name="Research Assistant",
     model="claude-3.5-sonnet",
-    about="""
-Layer 1: Base Instruction
-You are a helpful research assistant. Your goal is to find concise information on topics provided by the user.
-
-Layer 2: Task Instruction
-When given a topic and an output format (e.g., "summary", "bullet points", "short report"), you must gather relevant information and structure it according to the requested format.
-
-Layer 3: Persona & Formatting Constraints
-Maintain a neutral, objective tone. Strictly adhere to the requested output format:
-- For "summary": Use 3–4 concise sentences
-- For "bullet points": Use up to 5 short, clear bullet points
-- For "short report": Limit to 150 words, no fluff
-
-If you cannot find reliable information on the topic, explicitly state: "No credible information could be found on this topic."
-"""
+    about="You are a helpful research assistant. Your goal is to find concise information on topics provided by the user."
 )
-#task definition
+
+# Task definition
 task_definition = yaml.safe_load("""
 name: Research Request
 description: Perform research on a given topic and format
 main:
 - prompt:
+  - role: system
+    content: >
+      You are a research assistant. Return research results strictly in the format the user asks for:
+      - summary: 3-4 sentences
+      - bullet points: max 5 points
+      - short report: max 150 words
   - role: user
     content: "$ f'Please provide a {steps[0].input.output_format} on the topic: {steps[0].input.topic}'"
-
 """)
-
 
 task = client.tasks.create(agent_id=agent.id, **task_definition)
 
@@ -59,6 +50,7 @@ class ResearchQuery(BaseModel):
 
 @app.post("/research")
 async def research(query: ResearchQuery):
+    print(query.topic, query.format)
     try:
         execution = client.executions.create(
             task_id=task.id,
@@ -79,4 +71,9 @@ async def research(query: ResearchQuery):
     
 @app.get("/")
 def home():
-    return {"message": "Welcome to the Julep Research Assistant!"}
+    return {
+        "message": "Welcome to the Julep Research !",
+        "usage": "POST /research with {'topic': '...', 'format': 'summary|bullet points|short report'}",
+        "docs": "/docs for Swagger UI"
+    }
+
