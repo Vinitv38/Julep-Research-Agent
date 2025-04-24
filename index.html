@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julep AI Research Assistant</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(120deg, #667eea, #764ba2);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+    }
+
+    header {
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 600px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #667eea;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5a67d8;
+    }
+
+    .response-box {
+      white-space: pre-wrap;
+      background-color: #f9f9f9;
+      border-left: 4px solid #764ba2;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Julep AI Research Assistant</h1>
+    <p>Enter a topic and select the output format to get a structured response from AI.</p>
+  </header>
+
+  <div class="container">
+    <label for="topic">Topic:</label>
+    <input type="text" id="topic" placeholder="e.g., Quantum Computing" />
+
+    <label for="format">Output Format:</label>
+    <select id="format">
+      <option value="summary">Summary</option>
+      <option value="bullet points">Bullet Points</option>
+      <option value="short report">Short Report</option>
+    </select>
+
+    <button onclick="fetchResearch()">Get Research</button>
+
+    <div id="response" class="response-box"></div>
+  </div>
+
+  <script>
+    async function fetchResearch() {
+      const topic = document.getElementById('topic').value;
+      const format = document.getElementById('format').value;
+      const responseBox = document.getElementById('response');
+
+      responseBox.textContent = 'Thinking...';
+
+      try {
+        const res = await fetch('https://julep-research-agent.vercel.app/research', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ topic, format })
+        });
+
+        const data = await res.json();
+
+        if (data.result) {
+          responseBox.textContent = data.result;
+        } else if (data.error) {
+          responseBox.textContent = `Error: ${data.error}`;
+        } else {
+          responseBox.textContent = 'Unexpected response format.';
+        }
+      } catch (err) {
+        responseBox.textContent = `Request failed: ${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
