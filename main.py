@@ -3,10 +3,19 @@ from pydantic import BaseModel
 from julep import Julep
 import os, yaml, time
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], #for developement, allowing all origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = Julep(api_key=os.getenv("JULEP_API_KEY"))
 
