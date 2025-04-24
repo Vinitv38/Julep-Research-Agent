@@ -1,6 +1,0 @@
-name: Research Request
-description: Perform research on a given topic and format
-main:
-- prompt:
-  - role: user
-    content: $ f"Topic: {steps[0].input.topic}\nFormat: {steps[0].input.format}"
