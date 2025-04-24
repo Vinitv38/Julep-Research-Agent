@@ -10,7 +10,7 @@ This project is a FastAPI-based web application that exposes a RESTful API endpo
 - 📌 Output formats: `summary`, `bullet points`, `short report`
 - ⚡ FastAPI backend with async support
 - 🌐 Interactive documentation via Swagger UI
-- ☁️ Deployed on [Railway.app](https://railway.app) for public access
+- ☁️ Deployed on [vercel.app](https://vercel.app) for public access
 
 ---
 
@@ -66,7 +66,7 @@ This project is a FastAPI-based web application that exposes a RESTful API endpo
 ## 🧪 Try It Live
 
 > **Swagger UI** available at  
-> [https://your-railway-url.railway.app/docs](https://your-railway-url.railway.app/docs)
+> [https://julep-research-agent.vercel.app/docs](https://julep-research-agent.vercel.app/docs)
 
 This lets users test the API directly from the browser with a live UI.
 
@@ -77,8 +77,8 @@ This lets users test the API directly from the browser with a live UI.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/research-assistant-api.git
-cd research-assistant-api
+git clone https://github.com/Vinitv38/Julep-Research-Agent.git
+cd Julep-Research-Agent
 ```
 
 ### 2. Install Dependencies
@@ -93,10 +93,6 @@ Create a `.env` file in the root:
 
 ```
 JULEP_API_KEY=your_julep_api_key
-```
-
-Optional:
-```
 JULEP_ENVIRONMENT=production
 ```
 
@@ -110,31 +106,19 @@ uvicorn main:app --reload
 
 ---
 
-## ☁️ Deployment (Railway)
-
-1. Push your project to GitHub
-2. Connect your GitHub repo to [Railway](https://railway.app)
-3. Set the `JULEP_API_KEY` environment variable
-4. Deploy — Railway will give you a public URL for your API
-
----
-
 ## 🧠 Technologies Used
 
 - [Julep AI](https://docs.julep.ai) – Agent configuration & orchestration
 - [FastAPI](https://fastapi.tiangolo.com/) – Python web framework
 - [Uvicorn](https://www.uvicorn.org/) – ASGI server
-- [Railway](https://railway.app) – Cloud hosting
 - `.env` + `python-dotenv` for configuration
 
 ---
 
 ## 🛠️ Future Enhancements
 
-- [ ] Add support for citation-aware agents
 - [ ] Add DuckDuckGo or Brave search tool
 - [ ] Enable streaming responses
-- [ ] Web-based frontend for prompt testing
 
 ---
 
