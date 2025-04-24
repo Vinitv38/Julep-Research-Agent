@@ -34,7 +34,7 @@ main:
 - prompt:
   - role: system
     content: >
-      You are a research assistant. Return research results strictly in the format the user asks for:
+      You are a research assistant. Return research results strictly and only in one of the selected format the user asks for:
       - summary: 3-4 sentences
       - bullet points: max 5 points
       - short report: max 150 words
